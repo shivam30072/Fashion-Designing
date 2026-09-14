@@ -65,4 +65,15 @@ export interface UserAuth {
   avatar?: string;
 }
 
+export interface EditorialLook {
+  id: string;
+  title: string;
+  season: string;
+  vibe: string;
+  leadImage: string;
+  curatorNote: string;
+  palette: string[];
+  productIds: string[];
+}
+
 export type ActiveTab = 'shop' | 'style-feed' | 'lookbook' | 'atelier';

@@ -8,6 +8,7 @@ import {
   Sparkles, 
   Star, 
   ChevronRight, 
+  ChevronLeft,
   Plus, 
   Minus, 
   ShoppingBag, 
@@ -119,52 +120,81 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
           </div>
 
           {/* Body Content */}
-          <div className="flex-1 overflow-y-auto p-6 md:p-8">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12">
+          <div className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-start">
               {/* Left Column: Visual Gallery */}
-              <div className="lg:col-span-7 flex flex-col-reverse sm:flex-row gap-4">
-                {/* Thumbnails */}
-                <div className="flex sm:flex-col gap-3 overflow-x-auto sm:overflow-visible pb-2 sm:pb-0">
-                  {product.images.map((img, idx) => (
-                    <button
-                      key={idx}
-                      onClick={() => setSelectedImageIndex(idx)}
-                      className={`relative flex-shrink-0 w-16 h-20 sm:w-20 sm:h-24 overflow-hidden border-2 transition-all ${
-                        selectedImageIndex === idx ? 'border-[#1a1918]' : 'border-transparent opacity-70 hover:opacity-100'
-                      }`}
-                    >
-                      <ImageWithPlaceholder 
-                        src={img} 
-                        alt={`${product.name} view ${idx + 1}`} 
-                        aspectRatio="aspect-[4/5]" 
-                      />
-                    </button>
-                  ))}
-                </div>
+              <div className="lg:col-span-6 min-w-0 lg:sticky lg:top-4">
+                <div className="flex flex-col-reverse sm:flex-row gap-3 sm:gap-4">
+                  {/* Thumbnails */}
+                  <div className="flex sm:flex-col gap-2 sm:gap-2.5 overflow-x-auto sm:overflow-y-auto sm:max-h-[500px] pb-1 sm:pb-0 scrollbar-none flex-shrink-0">
+                    {product.images.map((img, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => setSelectedImageIndex(idx)}
+                        className={`relative flex-shrink-0 w-14 h-18 sm:w-16 sm:h-20 overflow-hidden border-2 transition-all ${
+                          selectedImageIndex === idx ? 'border-[#1a1918] opacity-100 shadow-sm' : 'border-transparent opacity-60 hover:opacity-100'
+                        }`}
+                      >
+                        <ImageWithPlaceholder 
+                          src={img} 
+                          alt={`${product.name} thumbnail ${idx + 1}`} 
+                          aspectRatio="aspect-[3/4]" 
+                        />
+                      </button>
+                    ))}
+                  </div>
 
-                {/* Primary High-Res Photo Display */}
-                <div className="flex-1 relative group bg-[#f4f2ec]">
-                  <ImageWithPlaceholder
-                    src={product.images[selectedImageIndex] || product.images[0]}
-                    alt={product.name}
-                    aspectRatio="aspect-[3/4]"
-                    className="w-full h-full shadow-inner"
-                  />
-                  {product.isNew && (
-                    <span className="absolute top-4 left-4 bg-[#1a1918] text-[#faf9f6] text-[10px] uppercase tracking-[0.2em] px-3 py-1 font-medium">
-                      Atelier New
-                    </span>
-                  )}
-                  {product.isBestSeller && (
-                    <span className="absolute top-4 right-4 bg-[#c6a76c] text-[#1a1918] text-[10px] uppercase tracking-[0.2em] px-3 py-1 font-semibold">
-                      Collector Favorite
-                    </span>
-                  )}
+                  {/* Primary High-Res Photo Display */}
+                  <div className="flex-1 min-w-0 relative group bg-[#f4f2ec] overflow-hidden border border-[#eae6dc]">
+                    <ImageWithPlaceholder
+                      src={product.images[selectedImageIndex] || product.images[0]}
+                      alt={product.name}
+                      aspectRatio="aspect-[3/4]"
+                      className="w-full shadow-inner"
+                    />
+                    
+                    {/* Previous / Next Image Nav Controls */}
+                    {product.images.length > 1 && (
+                      <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex items-center justify-between px-2 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity">
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedImageIndex((prev) => (prev === 0 ? product.images.length - 1 : prev - 1));
+                          }}
+                          className="pointer-events-auto p-1.5 bg-white/90 backdrop-blur text-[#1a1918] hover:bg-[#1a1918] hover:text-white transition-colors shadow"
+                          aria-label="Previous image"
+                        >
+                          <ChevronLeft className="w-4 h-4" />
+                        </button>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedImageIndex((prev) => (prev === product.images.length - 1 ? 0 : prev + 1));
+                          }}
+                          className="pointer-events-auto p-1.5 bg-white/90 backdrop-blur text-[#1a1918] hover:bg-[#1a1918] hover:text-white transition-colors shadow"
+                          aria-label="Next image"
+                        >
+                          <ChevronRight className="w-4 h-4" />
+                        </button>
+                      </div>
+                    )}
+
+                    {product.isNew && (
+                      <span className="absolute top-3 left-3 bg-[#1a1918] text-[#faf9f6] text-[9px] uppercase tracking-[0.2em] px-2.5 py-1 font-medium z-10">
+                        Atelier New
+                      </span>
+                    )}
+                    {product.isBestSeller && (
+                      <span className="absolute top-3 right-3 bg-[#c6a76c] text-[#1a1918] text-[9px] uppercase tracking-[0.2em] px-2.5 py-1 font-semibold z-10">
+                        Collector Favorite
+                      </span>
+                    )}
+                  </div>
                 </div>
               </div>
 
               {/* Right Column: Product Narrative & Interactive Controls */}
-              <div className="lg:col-span-5 flex flex-col justify-between">
+              <div className="lg:col-span-6 min-w-0 flex flex-col justify-between">
                 <div>
                   <span className="text-[11px] uppercase tracking-[0.25em] text-[#9c9688] font-medium">
                     SIYA &bull; {product.category}

@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Sparkles, Heart, Plus, ArrowRight, Sliders, Check } from 'lucide-react';
-import { Product, ProductColor } from '../types';
+import { Product, ProductColor, EditorialLook } from '../types';
 import { STYLE_VIBES } from '../data/products';
 import { ImageWithPlaceholder } from './ImageWithPlaceholder';
+import { EnsembleModal } from './EnsembleModal';
 
 interface PersonalizedStyleFeedProps {
   products: Product[];
@@ -10,18 +11,8 @@ interface PersonalizedStyleFeedProps {
   onToggleBookmark: (productId: string) => void;
   onSelectProduct: (product: Product) => void;
   onQuickAdd: (product: Product) => void;
+  onAddToCart?: (product: Product, size: string, color: ProductColor, quantity: number) => void;
   userName?: string;
-}
-
-interface EditorialLook {
-  id: string;
-  title: string;
-  season: string;
-  vibe: string;
-  leadImage: string;
-  curatorNote: string;
-  palette: string[];
-  productIds: string[];
 }
 
 const EDITORIAL_LOOKS: EditorialLook[] = [
@@ -63,10 +54,21 @@ export const PersonalizedStyleFeed: React.FC<PersonalizedStyleFeedProps> = ({
   onToggleBookmark,
   onSelectProduct,
   onQuickAdd,
+  onAddToCart,
   userName = 'Client',
 }) => {
   const [activeVibe, setActiveVibe] = useState<string>('Quiet Luxury');
   const [selectedPalettes, setSelectedPalettes] = useState<string[]>(['Champagne', 'Obsidian', 'Bone']);
+  const [selectedEnsembleLook, setSelectedEnsembleLook] = useState<EditorialLook | null>(null);
+
+  // Fallback cart handler if not directly provided
+  const handleAddToCartInternal = (p: Product, size: string, color: ProductColor, quantity: number) => {
+    if (onAddToCart) {
+      onAddToCart(p, size, color, quantity);
+    } else {
+      onQuickAdd(p);
+    }
+  };
 
   // Filter products based on selected vibe or general recommendation
   const matchingProducts = products.filter(p => 
@@ -239,9 +241,8 @@ export const PersonalizedStyleFeed: React.FC<PersonalizedStyleFeedProps> = ({
 
                 <div className="p-6 pt-0">
                   <button
-                    onClick={() => {
-                      if (lookProducts[0]) onSelectProduct(lookProducts[0]);
-                    }}
+                    id={`inspect-ensemble-btn-${look.id}`}
+                    onClick={() => setSelectedEnsembleLook(look)}
                     className="w-full py-2.5 border border-[#1a1918] text-[#1a1918] text-xs uppercase tracking-[0.2em] font-medium hover:bg-[#1a1918] hover:text-white transition-all flex items-center justify-center gap-2 cursor-pointer"
                   >
                     <span>Inspect Full Ensemble</span>
@@ -323,6 +324,21 @@ export const PersonalizedStyleFeed: React.FC<PersonalizedStyleFeedProps> = ({
           })}
         </div>
       </div>
+
+      {/* Full Ensemble Inspection Modal */}
+      <EnsembleModal
+        look={selectedEnsembleLook}
+        isOpen={!!selectedEnsembleLook}
+        onClose={() => setSelectedEnsembleLook(null)}
+        products={products}
+        onSelectProduct={(p) => {
+          setSelectedEnsembleLook(null);
+          onSelectProduct(p);
+        }}
+        onAddToCart={handleAddToCartInternal}
+        bookmarks={bookmarks}
+        onToggleBookmark={onToggleBookmark}
+      />
     </div>
   );
 };

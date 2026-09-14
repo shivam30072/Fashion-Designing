@@ -36,37 +36,37 @@ export const SiyaLogo: React.FC<SiyaLogoProps> = ({
 
   const sizeClasses = {
     sm: {
-      wrap: 'gap-1.5',
-      emblem: 'w-5 h-5',
-      text: 'text-lg tracking-[0.3em]',
-      sub: 'text-[7px] tracking-[0.25em]',
+      wrap: 'gap-1',
+      emblem: 'w-4 h-4 sm:w-5 sm:h-5',
+      text: 'text-base sm:text-lg tracking-[0.22em] sm:tracking-[0.3em]',
+      sub: 'text-[6px] sm:text-[7px] tracking-[0.2em] sm:tracking-[0.25em]',
     },
     md: {
-      wrap: 'gap-2',
-      emblem: 'w-7 h-7',
-      text: 'text-2xl tracking-[0.35em]',
-      sub: 'text-[9px] tracking-[0.3em]',
+      wrap: 'gap-0.5 sm:gap-1.5',
+      emblem: 'w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7',
+      text: 'text-lg sm:text-xl md:text-2xl tracking-[0.22em] sm:tracking-[0.3em] md:tracking-[0.35em]',
+      sub: 'text-[7px] sm:text-[8px] md:text-[9px] tracking-[0.2em] sm:tracking-[0.25em] md:tracking-[0.3em]',
     },
     lg: {
-      wrap: 'gap-2.5',
-      emblem: 'w-10 h-10',
-      text: 'text-3xl tracking-[0.4em]',
-      sub: 'text-[10px] tracking-[0.35em]',
+      wrap: 'gap-1.5 sm:gap-2.5',
+      emblem: 'w-8 h-8 sm:w-10 sm:h-10',
+      text: 'text-2xl sm:text-3xl tracking-[0.3em] sm:tracking-[0.4em]',
+      sub: 'text-[9px] sm:text-[10px] tracking-[0.25em] sm:tracking-[0.35em]',
     },
     xl: {
-      wrap: 'gap-3',
-      emblem: 'w-14 h-14',
-      text: 'text-5xl tracking-[0.45em]',
-      sub: 'text-xs tracking-[0.4em]',
+      wrap: 'gap-2 sm:gap-3',
+      emblem: 'w-10 h-10 sm:w-14 sm:h-14',
+      text: 'text-3xl sm:text-5xl tracking-[0.3em] sm:tracking-[0.45em]',
+      sub: 'text-[10px] sm:text-xs tracking-[0.3em] sm:tracking-[0.4em]',
     },
   }[size];
 
   return (
     <div 
       id="siya-brand-logo" 
-      className={`inline-flex flex-col items-center justify-center select-none cursor-pointer group ${sizeClasses.wrap} ${className}`}
+      className={`inline-flex flex-col items-center justify-center select-none cursor-pointer group flex-shrink-0 ${sizeClasses.wrap} ${className}`}
     >
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-1.5 sm:gap-2">
         {/* Custom Haute Couture Monogram Emblem */}
         <svg 
           viewBox="0 0 100 100" 

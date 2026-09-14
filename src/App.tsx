@@ -427,6 +427,7 @@ export default function App() {
             onToggleBookmark={handleToggleBookmark}
             onSelectProduct={setSelectedProduct}
             onQuickAdd={handleQuickAdd}
+            onAddToCart={handleAddToCart}
             userName={userAuth.name}
           />
         )}

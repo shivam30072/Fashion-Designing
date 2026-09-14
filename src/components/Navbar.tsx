@@ -67,72 +67,74 @@ export const Navbar: React.FC<NavbarProps> = ({
       </div>
 
       {/* Main Brand & Nav Row */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="h-20 flex items-center justify-between gap-4">
-          {/* Mobile Menu Button */}
-          <button
-            id="mobile-menu-toggle"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2 text-[#1a1918] hover:text-[#7d786d] transition-colors"
-            aria-label="Toggle navigation menu"
-          >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
-
-          {/* Desktop Left Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-8 text-xs uppercase tracking-[0.22em] font-medium">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+        <div className="h-16 sm:h-20 flex items-center justify-between gap-2 sm:gap-4">
+          {/* Mobile Menu Button / Left Area */}
+          <div className="flex items-center lg:flex-initial flex-shrink-0">
             <button
-              id="nav-link-shop"
-              onClick={() => onTabChange('shop')}
-              className={`py-2 transition-colors relative ${
-                activeTab === 'shop' 
-                  ? 'text-[#1a1918] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[1.5px] after:bg-[#1a1918]' 
-                  : 'text-[#6e6a5f] hover:text-[#1a1918]'
-              }`}
+              id="mobile-menu-toggle"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="lg:hidden p-1.5 sm:p-2 text-[#1a1918] hover:text-[#7d786d] transition-colors rounded"
+              aria-label="Toggle navigation menu"
             >
-              Collections
+              {mobileMenuOpen ? <X className="w-5 h-5 sm:w-6 sm:h-6" /> : <Menu className="w-5 h-5 sm:w-6 sm:h-6" />}
             </button>
 
-            <button
-              id="nav-link-style-feed"
-              onClick={() => onTabChange('style-feed')}
-              className={`py-2 flex items-center gap-1.5 transition-colors relative ${
-                activeTab === 'style-feed' 
-                  ? 'text-[#1a1918] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[1.5px] after:bg-[#1a1918]' 
-                  : 'text-[#6e6a5f] hover:text-[#1a1918]'
-              }`}
-            >
-              <Sparkles className="w-3.5 h-3.5 text-[#c6a76c]" />
-              <span>Personalized Style Feed</span>
-            </button>
+            {/* Desktop Left Navigation Links */}
+            <nav className="hidden lg:flex items-center gap-8 text-xs uppercase tracking-[0.22em] font-medium">
+              <button
+                id="nav-link-shop"
+                onClick={() => onTabChange('shop')}
+                className={`py-2 transition-colors relative ${
+                  activeTab === 'shop' 
+                    ? 'text-[#1a1918] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[1.5px] after:bg-[#1a1918]' 
+                    : 'text-[#6e6a5f] hover:text-[#1a1918]'
+                }`}
+              >
+                Collections
+              </button>
 
-            <button
-              id="nav-link-atelier"
-              onClick={() => onTabChange('atelier')}
-              className={`py-2 transition-colors relative ${
-                activeTab === 'atelier' 
-                  ? 'text-[#1a1918] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[1.5px] after:bg-[#1a1918]' 
-                  : 'text-[#6e6a5f] hover:text-[#1a1918]'
-              }`}
-            >
-              The Atelier
-            </button>
-          </nav>
+              <button
+                id="nav-link-style-feed"
+                onClick={() => onTabChange('style-feed')}
+                className={`py-2 flex items-center gap-1.5 transition-colors relative ${
+                  activeTab === 'style-feed' 
+                    ? 'text-[#1a1918] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[1.5px] after:bg-[#1a1918]' 
+                    : 'text-[#6e6a5f] hover:text-[#1a1918]'
+                }`}
+              >
+                <Sparkles className="w-3.5 h-3.5 text-[#c6a76c]" />
+                <span>Personalized Style Feed</span>
+              </button>
+
+              <button
+                id="nav-link-atelier"
+                onClick={() => onTabChange('atelier')}
+                className={`py-2 transition-colors relative ${
+                  activeTab === 'atelier' 
+                    ? 'text-[#1a1918] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[1.5px] after:bg-[#1a1918]' 
+                    : 'text-[#6e6a5f] hover:text-[#1a1918]'
+                }`}
+              >
+                The Atelier
+              </button>
+            </nav>
+          </div>
 
           {/* Center Brand Identity / Bespoke Logo */}
           <div 
             onClick={() => onTabChange('shop')}
-            className="flex-1 lg:flex-initial flex justify-center py-1 cursor-pointer"
+            className="flex-1 lg:flex-initial flex items-center justify-center py-1 cursor-pointer min-w-0 px-1 text-center"
           >
             <SiyaLogo size="md" />
           </div>
 
           {/* Right Action Icons: Search, Wishlist, Auth, Bag */}
-          <div className="flex items-center gap-2 sm:gap-4">
+          <div className="flex items-center justify-end gap-1 sm:gap-3 flex-shrink-0">
             {/* Search toggle */}
             <div className="relative">
               {searchOpen ? (
-                <div className="flex items-center bg-white border border-[#d8d4cb] px-2.5 py-1 text-xs">
+                <div className="hidden sm:flex items-center bg-white border border-[#d8d4cb] px-2.5 py-1 text-xs">
                   <input
                     id="search-catalog-input"
                     type="text"
@@ -140,7 +142,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     value={searchQuery}
                     onChange={(e) => onSearchChange(e.target.value)}
                     autoFocus
-                    className="w-32 sm:w-44 bg-transparent outline-none text-xs"
+                    className="w-28 sm:w-44 bg-transparent outline-none text-xs"
                   />
                   <button 
                     onClick={() => {
@@ -152,28 +154,30 @@ export const Navbar: React.FC<NavbarProps> = ({
                     <X className="w-3.5 h-3.5" />
                   </button>
                 </div>
-              ) : (
-                <button
-                  id="open-search-btn"
-                  onClick={() => setSearchOpen(true)}
-                  className="p-2 text-[#5c584f] hover:text-[#1a1918] transition-colors"
-                  title="Search collections"
-                >
-                  <Search className="w-5 h-5 stroke-[1.5]" />
-                </button>
-              )}
+              ) : null}
+
+              <button
+                id="open-search-btn"
+                onClick={() => setSearchOpen(!searchOpen)}
+                className={`p-1.5 sm:p-2 text-[#5c584f] hover:text-[#1a1918] transition-colors ${
+                  searchOpen ? 'sm:hidden text-[#1a1918]' : ''
+                }`}
+                title="Search collections"
+              >
+                <Search className="w-4 h-4 sm:w-5 sm:h-5 stroke-[1.5]" />
+              </button>
             </div>
 
             {/* Bookmarks / Wishlist */}
             <button
               id="open-wishlist-btn"
               onClick={onOpenWishlist}
-              className="p-2 text-[#5c584f] hover:text-[#1a1918] transition-colors relative"
+              className="p-1.5 sm:p-2 text-[#5c584f] hover:text-[#1a1918] transition-colors relative"
               title="View bookmarks"
             >
-              <Heart className="w-5 h-5 stroke-[1.5]" />
+              <Heart className="w-4 h-4 sm:w-5 sm:h-5 stroke-[1.5]" />
               {wishlistCount > 0 && (
-                <span className="absolute top-1 right-1 w-4 h-4 rounded-full bg-rose-600 text-white text-[9px] font-bold flex items-center justify-center">
+                <span className="absolute top-0.5 right-0.5 w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-rose-600 text-white text-[8px] sm:text-[9px] font-bold flex items-center justify-center">
                   {wishlistCount}
                 </span>
               )}
@@ -183,12 +187,12 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               id="open-auth-btn"
               onClick={onOpenAuth}
-              className="p-2 text-[#5c584f] hover:text-[#1a1918] transition-colors flex items-center gap-1.5"
+              className="p-1.5 sm:p-2 text-[#5c584f] hover:text-[#1a1918] transition-colors flex items-center gap-1.5"
               title={userAuth.isLoggedIn ? `Account: ${userAuth.name}` : 'Sign in to SIYA'}
             >
               {userAuth.isLoggedIn ? (
-                <div className="flex items-center gap-2">
-                  <span className="w-7 h-7 rounded-full overflow-hidden border border-[#1a1918] p-0.5">
+                <div className="flex items-center gap-1.5">
+                  <span className="w-6 h-6 sm:w-7 sm:h-7 rounded-full overflow-hidden border border-[#1a1918] p-0.5">
                     <img 
                       src={userAuth.avatar || `https://api.dicebear.com/7.x/initials/svg?seed=${userAuth.name}`} 
                       alt={userAuth.name}
@@ -200,7 +204,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   </span>
                 </div>
               ) : (
-                <User className="w-5 h-5 stroke-[1.5]" />
+                <User className="w-4 h-4 sm:w-5 sm:h-5 stroke-[1.5]" />
               )}
             </button>
 
@@ -208,13 +212,13 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               id="open-cart-btn"
               onClick={onOpenCart}
-              className="p-2 text-[#1a1918] hover:text-[#886c35] transition-colors relative flex items-center gap-2"
+              className="p-1.5 sm:p-2 text-[#1a1918] hover:text-[#886c35] transition-colors relative flex items-center gap-1 sm:gap-2"
               title="Shopping Bag"
             >
               <div className="relative">
-                <ShoppingBag className="w-5 h-5 stroke-[1.5]" />
+                <ShoppingBag className="w-4 h-4 sm:w-5 sm:h-5 stroke-[1.5]" />
                 {cartCount > 0 && (
-                  <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#1a1918] text-[#faf9f6] text-[9px] font-bold flex items-center justify-center">
+                  <span className="absolute -top-1 -right-1 w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#1a1918] text-[#faf9f6] text-[8px] sm:text-[9px] font-bold flex items-center justify-center">
                     {cartCount}
                   </span>
                 )}
@@ -225,6 +229,41 @@ export const Navbar: React.FC<NavbarProps> = ({
             </button>
           </div>
         </div>
+
+        {/* Mobile Search Bar Dropdown (when open on small screens) */}
+        {searchOpen && (
+          <div className="sm:hidden pb-3 pt-1 border-t border-[#ede8dc] flex items-center gap-2 animate-in fade-in slide-in-from-top-1 duration-200">
+            <div className="flex-1 flex items-center bg-white border border-[#d8d4cb] px-3 py-1.5 text-xs">
+              <Search className="w-3.5 h-3.5 text-[#8a8579] mr-2" />
+              <input
+                id="search-catalog-mobile-input"
+                type="text"
+                placeholder="Search silk, trench, gown, jacket..."
+                value={searchQuery}
+                onChange={(e) => onSearchChange(e.target.value)}
+                autoFocus
+                className="w-full bg-transparent outline-none text-xs text-[#1a1918]"
+              />
+              {searchQuery && (
+                <button 
+                  onClick={() => onSearchChange('')}
+                  className="p-0.5 text-[#8a8579] hover:text-[#1a1918]"
+                >
+                  <X className="w-3 h-3" />
+                </button>
+              )}
+            </div>
+            <button
+              onClick={() => {
+                setSearchOpen(false);
+                onSearchChange('');
+              }}
+              className="text-xs uppercase tracking-wider font-medium text-[#7d786d] px-2 py-1"
+            >
+              Cancel
+            </button>
+          </div>
+        )}
 
         {/* Category Sub-Navigation Bar (for Shop view) */}
         {activeTab === 'shop' && (
