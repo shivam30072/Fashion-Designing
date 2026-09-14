@@ -1,0 +1,6 @@
+{
+  "name": "SIYA",
+  "description": "Sleek minimalist fashion designing studio and boutique featuring curated couture, personalized style feed, bookmarking, and seamless checkout experience.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
