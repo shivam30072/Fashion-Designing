@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, ArrowRight, ShoppingBag, Check, Heart, Sparkles, ChevronRight } from 'lucide-react';
+import { X, ArrowRight, ShoppingBag, Check, Heart, Sparkles, ChevronRight, ArrowLeft } from 'lucide-react';
 import { EditorialLook, Product, ProductColor } from '../types';
 import { ImageWithPlaceholder } from './ImageWithPlaceholder';
 
@@ -63,8 +63,19 @@ export const EnsembleModal: React.FC<EnsembleModalProps> = ({
         className="relative w-full max-w-4xl bg-[#faf9f6] text-[#1a1918] shadow-2xl flex flex-col sm:border border-[#ded9cb] max-h-[92vh] overflow-hidden"
       >
         {/* Header Bar */}
-        <div className="sticky top-0 z-20 flex items-center justify-between px-5 sm:px-6 py-4 bg-[#faf9f6]/95 backdrop-blur border-b border-[#ece7dc]">
+        <div className="sticky top-0 z-20 flex items-center justify-between px-4 sm:px-6 py-3.5 sm:py-4 bg-[#faf9f6]/95 backdrop-blur border-b border-[#ece7dc]">
           <div className="flex items-center gap-2 text-xs uppercase tracking-[0.22em] text-[#7d786d] min-w-0">
+            {/* Mobile back button */}
+            <button
+              id="ensemble-back-btn-mobile"
+              onClick={onClose}
+              className="flex sm:hidden items-center gap-1.5 py-1 px-2.5 -ml-1.5 text-[#1a1918] hover:bg-[#efebe2] active:bg-[#e4ded2] transition-colors rounded-sm text-[11px] font-semibold tracking-wider"
+              aria-label="Back to looks"
+            >
+              <ArrowLeft className="w-4 h-4 text-[#1a1918]" />
+              <span>Back</span>
+            </button>
+
             <span className="hidden sm:inline">SIYA Editorial Lookbook</span>
             <ChevronRight className="w-3.5 h-3.5 hidden sm:inline" />
             <span className="text-[#1a1918] font-medium truncate">{look.title}</span>

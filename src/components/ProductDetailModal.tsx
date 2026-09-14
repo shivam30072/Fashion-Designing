@@ -9,6 +9,7 @@ import {
   Star, 
   ChevronRight, 
   ChevronLeft,
+  ArrowLeft,
   Plus, 
   Minus, 
   ShoppingBag, 
@@ -90,14 +91,27 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
           className="relative w-full max-w-5xl bg-[#faf9f6] text-[#1a1918] shadow-2xl min-h-screen sm:min-h-0 sm:max-h-[92vh] flex flex-col sm:border border-[#e0dbcf] overflow-hidden"
         >
           {/* Header Bar */}
-          <div className="sticky top-0 z-20 flex items-center justify-between px-6 py-4 bg-[#faf9f6]/95 backdrop-blur border-b border-[#ece7dc]">
-            <div className="flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-[#7d786d]">
-              <span>SIYA Archive</span>
-              <ChevronRight className="w-3.5 h-3.5" />
-              <span className="text-[#1a1918] font-medium">{product.category}</span>
+          <div className="sticky top-0 z-30 flex items-center justify-between px-4 sm:px-6 py-3 sm:py-3.5 bg-[#faf9f6]/95 backdrop-blur border-b border-[#ece7dc]">
+            <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+              {/* Dedicated High-Visibility Back Button (Always visible on mobile & all screens) */}
+              <button
+                id="product-detail-back-btn"
+                onClick={onClose}
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-[#1a1918] text-[#faf9f6] hover:bg-[#383531] active:scale-95 transition-all rounded text-xs font-semibold uppercase tracking-wider shadow-sm cursor-pointer"
+                aria-label="Back to catalog"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                <span>Back</span>
+              </button>
+
+              <div className="flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-[#7d786d] min-w-0">
+                <span className="hidden sm:inline">SIYA Archive</span>
+                <ChevronRight className="w-3.5 h-3.5 hidden sm:inline" />
+                <span className="text-[#1a1918] font-medium truncate">{product.category}</span>
+              </div>
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5 sm:gap-2">
               <button
                 id="detail-bookmark-btn"
                 onClick={() => onToggleBookmark(product.id)}
@@ -105,6 +119,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                   isBookmarked ? 'text-rose-600 bg-rose-50' : 'text-[#7d786d] hover:text-[#1a1918] hover:bg-[#efebe2]'
                 }`}
                 title={isBookmarked ? 'Remove Bookmark' : 'Bookmark to Wishlist'}
+                aria-label={isBookmarked ? 'Remove Bookmark' : 'Bookmark to Wishlist'}
               >
                 <Heart className={`w-5 h-5 ${isBookmarked ? 'fill-rose-600' : ''}`} />
               </button>
@@ -112,7 +127,8 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
               <button
                 id="detail-close-btn"
                 onClick={onClose}
-                className="p-2 text-[#7d786d] hover:text-[#1a1918] hover:bg-[#efebe2] transition-colors rounded-full"
+                className="p-2 text-[#7d786d] hover:text-[#1a1918] hover:bg-[#efebe2] transition-colors rounded-full cursor-pointer"
+                aria-label="Close product view"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -122,89 +138,182 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
           {/* Body Content */}
           <div className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-start">
-              {/* Left Column: Visual Gallery */}
-              <div className="lg:col-span-6 min-w-0 lg:sticky lg:top-4">
-                <div className="flex flex-col-reverse sm:flex-row gap-3 sm:gap-4">
-                  {/* Thumbnails */}
-                  <div className="flex sm:flex-col gap-2 sm:gap-2.5 overflow-x-auto sm:overflow-y-auto sm:max-h-[500px] pb-1 sm:pb-0 scrollbar-none flex-shrink-0">
+              {/* Left Column: Visual Gallery & Atelier Color Palette */}
+              <div className="w-full lg:col-span-6 min-w-0 lg:sticky lg:top-4">
+                {/* Mobile Product Header (Above image on mobile) */}
+                <div className="block lg:hidden mb-3">
+                  <span className="text-[10px] uppercase tracking-[0.25em] text-[#9c9688] font-medium">
+                    SIYA &bull; {product.category}
+                  </span>
+                  <div className="flex items-baseline justify-between gap-2 mt-0.5">
+                    <h1 className="font-editorial text-2xl sm:text-3xl font-light text-[#1a1918] leading-tight">
+                      {product.name}
+                    </h1>
+                    <span className="text-xl font-light text-[#1a1918] whitespace-nowrap">
+                      ${product.price.toLocaleString()} USD
+                    </span>
+                  </div>
+                </div>
+
+                {/* Primary High-Res Photo Display - At least half the screen size (50vh) */}
+                <div className="w-full relative group bg-[#f4f2ec] overflow-hidden border border-[#eae6dc] h-[50vh] sm:h-[55vh] lg:h-[520px] min-h-[50vh] flex items-center justify-center">
+                  {/* Floating Back Button on mobile directly on image */}
+                  <button
+                    id="mobile-floating-back-btn"
+                    onClick={onClose}
+                    className="sm:hidden absolute top-3 left-3 z-30 flex items-center gap-1.5 px-3 py-1.5 bg-black/80 hover:bg-black text-white text-xs font-semibold uppercase tracking-wider backdrop-blur-md rounded-full shadow-lg transition-transform active:scale-95 cursor-pointer"
+                    aria-label="Back to catalog"
+                  >
+                    <ArrowLeft className="w-4 h-4" />
+                    <span>Back</span>
+                  </button>
+
+                  <ImageWithPlaceholder
+                    src={product.images[selectedImageIndex] || product.images[0]}
+                    alt={product.name}
+                    aspectRatio="h-full w-full"
+                    objectFit="cover"
+                    className="w-full h-full shadow-inner"
+                  />
+                  
+                  {/* Previous / Next Image Nav Controls */}
+                  {product.images.length > 1 && (
+                    <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex items-center justify-between px-2.5 pointer-events-none opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity z-10">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedImageIndex((prev) => (prev === 0 ? product.images.length - 1 : prev - 1));
+                        }}
+                        className="pointer-events-auto p-2 bg-white/95 text-[#1a1918] hover:bg-[#1a1918] hover:text-white transition-colors shadow-md rounded-full cursor-pointer"
+                        aria-label="Previous image"
+                      >
+                        <ChevronLeft className="w-4 h-4" />
+                      </button>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedImageIndex((prev) => (prev === product.images.length - 1 ? 0 : prev + 1));
+                        }}
+                        className="pointer-events-auto p-2 bg-white/95 text-[#1a1918] hover:bg-[#1a1918] hover:text-white transition-colors shadow-md rounded-full cursor-pointer"
+                        aria-label="Next image"
+                      >
+                        <ChevronRight className="w-4 h-4" />
+                      </button>
+                    </div>
+                  )}
+
+                  {/* Photo Indicators / Carousel Dots */}
+                  {product.images.length > 1 && (
+                    <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-10 flex items-center gap-1.5 bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full pointer-events-auto">
+                      {product.images.map((_, idx) => (
+                        <button
+                          key={idx}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedImageIndex(idx);
+                          }}
+                          className={`transition-all rounded-full cursor-pointer ${
+                            selectedImageIndex === idx 
+                              ? 'w-5 h-1.5 bg-white' 
+                              : 'w-1.5 h-1.5 bg-white/50 hover:bg-white/90'
+                          }`}
+                          aria-label={`Go to slide ${idx + 1}`}
+                        />
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Photo Counter Indicator */}
+                  {product.images.length > 1 && (
+                    <div className="absolute bottom-3 right-3 z-10 bg-black/75 backdrop-blur text-white text-[11px] px-2.5 py-1 rounded tracking-widest font-mono hidden sm:block">
+                      {selectedImageIndex + 1} / {product.images.length}
+                    </div>
+                  )}
+
+                  {product.isNew && (
+                    <span className="absolute top-3 right-3 sm:left-3 sm:right-auto bg-[#1a1918] text-[#faf9f6] text-[9px] uppercase tracking-[0.2em] px-2.5 py-1 font-medium z-10">
+                      Atelier New
+                    </span>
+                  )}
+                  {product.isBestSeller && (
+                    <span className="absolute top-11 right-3 sm:top-3 sm:right-3 bg-[#c6a76c] text-[#1a1918] text-[9px] uppercase tracking-[0.2em] px-2.5 py-1 font-semibold z-10">
+                      Collector Favorite
+                    </span>
+                  )}
+                </div>
+
+                {/* ATELIER PALETTE - DIRECTLY BELOW THE IMAGE */}
+                <div className="mt-2.5 sm:mt-3 p-3.5 sm:p-4 bg-[#f6f4ee] border border-[#e2ddd0] rounded-sm">
+                  <div className="flex items-center justify-between text-xs mb-2.5">
+                    <div className="flex items-center gap-2">
+                      <span className="w-2.5 h-2.5 rounded-full bg-[#c6a76c]"></span>
+                      <span className="uppercase tracking-[0.2em] text-[#57534a] font-semibold text-xs">
+                        Atelier Palette
+                      </span>
+                    </div>
+                    <span className="text-[#1a1918] font-medium bg-white px-2.5 py-0.5 border border-[#d8d3c5] text-xs shadow-2xs">
+                      {selectedColor.name}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    {product.colors.map((c) => (
+                      <button
+                        key={c.name}
+                        id={`detail-color-btn-${c.name.toLowerCase().replace(/\s+/g, '-')}`}
+                        onClick={() => setSelectedColor(c)}
+                        className={`group relative w-10 h-10 sm:w-9 sm:h-9 rounded-full flex items-center justify-center transition-all cursor-pointer ${
+                          selectedColor.name === c.name 
+                            ? 'ring-2 ring-[#1a1918] ring-offset-2 scale-110 shadow-sm' 
+                            : 'hover:scale-105 opacity-80 hover:opacity-100'
+                        }`}
+                        title={c.name}
+                        aria-label={`Select color ${c.name}`}
+                      >
+                        <span 
+                          className="w-full h-full rounded-full border border-black/15 shadow-inner"
+                          style={{ backgroundColor: c.hex }}
+                        />
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Thumbnails Row (Positioned below the Color Palette) */}
+                {product.images.length > 1 && (
+                  <div className="flex gap-2 sm:gap-2.5 overflow-x-auto pb-1 mt-2.5 scrollbar-none flex-shrink-0">
                     {product.images.map((img, idx) => (
                       <button
                         key={idx}
                         onClick={() => setSelectedImageIndex(idx)}
-                        className={`relative flex-shrink-0 w-14 h-18 sm:w-16 sm:h-20 overflow-hidden border-2 transition-all ${
-                          selectedImageIndex === idx ? 'border-[#1a1918] opacity-100 shadow-sm' : 'border-transparent opacity-60 hover:opacity-100'
+                        className={`relative flex-shrink-0 w-12 h-16 sm:w-16 sm:h-20 overflow-hidden border-2 transition-all cursor-pointer ${
+                          selectedImageIndex === idx ? 'border-[#1a1918] opacity-100 shadow-sm ring-1 ring-[#1a1918]' : 'border-transparent opacity-60 hover:opacity-100'
                         }`}
                       >
                         <ImageWithPlaceholder 
                           src={img} 
                           alt={`${product.name} thumbnail ${idx + 1}`} 
-                          aspectRatio="aspect-[3/4]" 
+                          aspectRatio="h-full w-full aspect-[3/4]" 
                         />
                       </button>
                     ))}
                   </div>
-
-                  {/* Primary High-Res Photo Display */}
-                  <div className="flex-1 min-w-0 relative group bg-[#f4f2ec] overflow-hidden border border-[#eae6dc]">
-                    <ImageWithPlaceholder
-                      src={product.images[selectedImageIndex] || product.images[0]}
-                      alt={product.name}
-                      aspectRatio="aspect-[3/4]"
-                      className="w-full shadow-inner"
-                    />
-                    
-                    {/* Previous / Next Image Nav Controls */}
-                    {product.images.length > 1 && (
-                      <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex items-center justify-between px-2 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity">
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setSelectedImageIndex((prev) => (prev === 0 ? product.images.length - 1 : prev - 1));
-                          }}
-                          className="pointer-events-auto p-1.5 bg-white/90 backdrop-blur text-[#1a1918] hover:bg-[#1a1918] hover:text-white transition-colors shadow"
-                          aria-label="Previous image"
-                        >
-                          <ChevronLeft className="w-4 h-4" />
-                        </button>
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setSelectedImageIndex((prev) => (prev === product.images.length - 1 ? 0 : prev + 1));
-                          }}
-                          className="pointer-events-auto p-1.5 bg-white/90 backdrop-blur text-[#1a1918] hover:bg-[#1a1918] hover:text-white transition-colors shadow"
-                          aria-label="Next image"
-                        >
-                          <ChevronRight className="w-4 h-4" />
-                        </button>
-                      </div>
-                    )}
-
-                    {product.isNew && (
-                      <span className="absolute top-3 left-3 bg-[#1a1918] text-[#faf9f6] text-[9px] uppercase tracking-[0.2em] px-2.5 py-1 font-medium z-10">
-                        Atelier New
-                      </span>
-                    )}
-                    {product.isBestSeller && (
-                      <span className="absolute top-3 right-3 bg-[#c6a76c] text-[#1a1918] text-[9px] uppercase tracking-[0.2em] px-2.5 py-1 font-semibold z-10">
-                        Collector Favorite
-                      </span>
-                    )}
-                  </div>
-                </div>
+                )}
               </div>
 
               {/* Right Column: Product Narrative & Interactive Controls */}
               <div className="lg:col-span-6 min-w-0 flex flex-col justify-between">
                 <div>
-                  <span className="text-[11px] uppercase tracking-[0.25em] text-[#9c9688] font-medium">
-                    SIYA &bull; {product.category}
-                  </span>
-                  <h1 className="font-editorial text-3xl sm:text-4xl font-light text-[#1a1918] mt-1 mb-2 leading-tight">
-                    {product.name}
-                  </h1>
+                  <div className="hidden lg:block">
+                    <span className="text-[11px] uppercase tracking-[0.25em] text-[#9c9688] font-medium">
+                      SIYA &bull; {product.category}
+                    </span>
+                    <h1 className="font-editorial text-3xl sm:text-4xl font-light text-[#1a1918] mt-1 mb-2 leading-tight">
+                      {product.name}
+                    </h1>
+                  </div>
 
                   {/* Ratings summary banner */}
-                  <div className="flex items-center gap-3 mb-4">
+                  <div className="flex items-center gap-3 mb-4 mt-2 lg:mt-0">
                     <div className="flex items-center text-[#1a1918]">
                       {[1, 2, 3, 4, 5].map((s) => (
                         <Star
@@ -224,14 +333,14 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                     <button
                       id="open-rating-modal-inline"
                       onClick={() => setIsReviewModalOpen(true)}
-                      className="text-xs text-[#1a1918] underline underline-offset-4 hover:text-[#c6a76c] transition-colors ml-auto font-medium"
+                      className="text-xs text-[#1a1918] underline underline-offset-4 hover:text-[#c6a76c] transition-colors ml-auto font-medium cursor-pointer"
                     >
                       Rate & Review
                     </button>
                   </div>
 
                   {/* Price */}
-                  <div className="flex items-baseline gap-3 mb-6">
+                  <div className="flex items-baseline gap-3 mb-5">
                     <span className="text-2xl font-light text-[#1a1918]">
                       ${product.price.toLocaleString()} USD
                     </span>
@@ -248,35 +357,6 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                   <p className="text-sm text-[#57534a] leading-relaxed mb-6 font-sans">
                     {product.description}
                   </p>
-
-                  {/* Color Selector */}
-                  <div className="mb-6">
-                    <div className="flex items-center justify-between text-xs mb-2">
-                      <span className="uppercase tracking-[0.15em] text-[#635f56] font-medium">
-                        Atelier Palette
-                      </span>
-                      <span className="text-[#1a1918] font-medium">{selectedColor.name}</span>
-                    </div>
-                    <div className="flex items-center gap-2.5">
-                      {product.colors.map((c) => (
-                        <button
-                          key={c.name}
-                          onClick={() => setSelectedColor(c)}
-                          className={`group relative w-8 h-8 rounded-full flex items-center justify-center transition-all ${
-                            selectedColor.name === c.name 
-                              ? 'ring-2 ring-[#1a1918] ring-offset-2' 
-                              : 'hover:scale-105 opacity-90'
-                          }`}
-                          title={c.name}
-                        >
-                          <span 
-                            className="w-full h-full rounded-full border border-black/10"
-                            style={{ backgroundColor: c.hex }}
-                          />
-                        </button>
-                      ))}
-                    </div>
-                  </div>
 
                   {/* Size Selector */}
                   <div className="mb-6">
